@@ -172,10 +172,9 @@ The application also supports group conversations.
 - Group information
 - Realtime group messaging
 
-Group messages are stored under:
 
 ```text
-groupChats/{groupId}/മെസ്സേജസ്
+
 
 
 https://zuzudeveloper.github.io/KP-INSTA/
