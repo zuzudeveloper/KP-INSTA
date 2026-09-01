@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<title>KP Insta — iOS Liquid Glass UI Final v5</title>
+<title>KP Insta — File Protocol Fixed v8</title>
 <style>
 :root{--accent:#4d6fff;--bg:#090a0d;--panel:#15171c;--panel2:#1d2026;--line:rgba(255,255,255,.10);--muted:#969aa3;--white:#f7f7f8}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#090a0d;color:var(--white);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}body{overflow-x:hidden}button,input,textarea{font:inherit}button{cursor:pointer;color:inherit}.app{width:min(520px,100%);margin:auto;min-height:100vh;background:linear-gradient(180deg,#0a0b0e 0,#0b0c10 100%);position:relative}.page{min-height:100vh;padding:18px 14px calc(92px + env(safe-area-inset-bottom));animation:pageIn .18s ease}@keyframes pageIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}.hide{display:none!important}
@@ -89,6 +89,99 @@ button,.iconBtn,.navBtn,.smallBtn,.primary,.secondary,.link,.createChoice,.uploa
 
 body:not(.lightMode){background:#050505;color:#f5f5f5}body:not(.lightMode) .app{background:#000;color:#f5f5f5}body:not(.lightMode) .appHeader,body:not(.lightMode) .bottomNav,body:not(.lightMode) .profileHeader,body:not(.lightMode) .messagesHead,body:not(.lightMode) .chatHeader{background:rgba(10,10,10,.9);color:#fff}body:not(.lightMode) .wordmark,body:not(.lightMode) .profileName,body:not(.lightMode) .profileHeaderTitle{color:#fff}body:not(.lightMode) .post,body:not(.lightMode) #homeView,body:not(.lightMode) #feed,body:not(.lightMode) #stories{background:#000}body:not(.lightMode) .searchBar{background:#1b1b1b}body:not(.lightMode) .searchBar input{color:#fff}body:not(.lightMode) .navBtn{color:#aaa!important}body:not(.lightMode) .navBtn.active{color:#fff!important}body:not(.lightMode) .glassNav{background:linear-gradient(135deg,rgba(40,40,42,.82),rgba(18,18,20,.62));border-color:rgba(255,255,255,.18)}body:not(.lightMode) .glassNav:before{background:linear-gradient(110deg,rgba(255,255,255,.12),transparent 38%,rgba(255,255,255,.04))}body:not(.lightMode) .navBtn.active:after{background:rgba(255,255,255,.12)}body:not(.lightMode) .navCreateIcon{background:#fff;color:#000}body:not(.lightMode) .navCreate .i{color:#000!important}body:not(.lightMode) .createChoice,body:not(.lightMode) .tagChip,body:not(.lightMode) .uploadButton,body:not(.lightMode) .profileActions button{background:#151515;color:#fff;border-color:#333}body:not(.lightMode) .choiceIcon,body:not(.lightMode) .coverPreview,body:not(.lightMode) .storyPreview{background:#1b1b1b}body:not(.lightMode) .story{color:#eee!important}body:not(.lightMode) .toast.theme{background:#111;color:#fff}
 .notifBtn.hasUnread .i{animation:bellWiggle .8s ease-in-out infinite}@keyframes bellWiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+
+/* === KP_INSTA_V6_START === */
+:root{
+  --v6-bg:#fff;--v6-fg:#111;--v6-muted:#737373;--v6-line:#e7e7e7;
+  --v6-blue:#0095f6;--v6-red:#ed4956;--v6-glass:rgba(255,255,255,.72);
+}
+*{box-sizing:border-box}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+body{background:#f2f2f2}
+.app{background:var(--v6-bg);color:var(--v6-fg)}
+.appHeader,.profileHeader,.messagesHead,.chatHeader{
+  backdrop-filter:saturate(180%) blur(18px);
+  -webkit-backdrop-filter:saturate(180%) blur(18px);
+}
+.appHeader{transition:transform .28s ease,opacity .28s ease}
+.appHeader.v6-hide{transform:translateY(-100%);opacity:0}
+.v6-anim{animation:v6In .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes v6In{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes v6Pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes v6Heart{0%{transform:scale(1)}25%{transform:scale(1.35)}55%{transform:scale(.9)}100%{transform:scale(1)}}
+.v6-liked{animation:v6Heart .42s ease}
+.v6-toast{
+ position:fixed;left:50%;bottom:88px;transform:translate(-50%,12px);
+ background:rgba(20,20,20,.9);color:#fff;padding:10px 16px;border-radius:18px;
+ z-index:9999;font-size:13px;opacity:0;pointer-events:none;transition:.25s ease;
+}
+.v6-toast.show{opacity:1;transform:translate(-50%,0)}
+.v6-glass-nav{
+ position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));
+ transform:translateX(-50%);width:min(92%,570px);height:64px;
+ display:flex;align-items:center;justify-content:space-around;padding:6px 8px;
+ border:1px solid rgba(255,255,255,.75);border-radius:25px;
+ background:var(--v6-glass);box-shadow:0 12px 40px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.8);
+ backdrop-filter:blur(24px) saturate(190%);-webkit-backdrop-filter:blur(24px) saturate(190%);
+ z-index:2000;
+}
+.v6-glass-nav button{position:relative;border:0;background:none;width:20%;height:52px;color:#111;display:grid;place-items:center}
+.v6-glass-nav button svg{width:25px;height:25px;transition:.25s cubic-bezier(.2,.8,.2,1)}
+.v6-glass-nav button.active:before{
+ content:"";position:absolute;inset:5px 10px;border-radius:18px;
+ background:rgba(255,255,255,.82);box-shadow:0 4px 14px rgba(0,0,0,.10),inset 0 1px rgba(255,255,255,.95);
+}
+.v6-glass-nav button.active svg{position:relative;z-index:1;transform:scale(1.08)}
+.v6-glass-create{
+ width:46px!important;height:46px!important;border-radius:16px!important;
+ background:#111!important;color:#fff!important;box-shadow:0 8px 20px rgba(0,0,0,.22);
+}
+.v6-glass-create svg{color:#fff}
+.v6-unread{
+ position:absolute;right:10px;top:3px;min-width:17px;height:17px;padding:0 4px;border-radius:10px;
+ background:var(--v6-red);color:#fff;font-size:9px;display:grid;place-items:center;border:2px solid #fff;
+ animation:v6Pop .35s ease;
+}
+.v6-storyAdd{animation:v6Pop .45s ease}
+.v6-story-viewer{
+ position:fixed;inset:0;background:#050505;z-index:6000;color:#fff;display:none;
+}
+.v6-story-viewer.show{display:block;animation:v6In .3s ease}
+.v6-story-stage{height:100%;display:flex;align-items:center;justify-content:center}
+.v6-story-stage img{width:100%;height:100%;object-fit:contain}
+.v6-story-top{position:absolute;left:12px;right:12px;top:12px;z-index:2}
+.v6-story-progress{height:3px;background:rgba(255,255,255,.3);border-radius:4px;overflow:hidden}
+.v6-story-progress i{display:block;height:100%;width:0;background:#fff;transition:width .1s linear}
+.v6-story-user{display:flex;align-items:center;gap:9px;margin-top:12px}
+.v6-story-user img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.v6-story-close{position:absolute;right:8px;top:5px;color:#fff;background:none;border:0;font-size:30px}
+.v6-story-zone{position:absolute;top:0;bottom:0;width:50%;z-index:3}
+.v6-story-prev{left:0}.v6-story-next{right:0}
+.v6-story-caption{position:absolute;left:18px;right:18px;bottom:35px;text-align:center;font-size:15px;text-shadow:0 2px 12px #000;z-index:4}
+.v6-create-sheet{
+ position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:5000;display:none;align-items:flex-end;
+}
+.v6-create-sheet.show{display:flex}
+.v6-create-card{width:100%;background:#fff;border-radius:26px 26px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));animation:v6In .35s ease}
+.v6-create-card h3{margin:0 0 14px}
+.v6-create-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.v6-create-options button{border:0;background:#f5f5f5;border-radius:18px;padding:18px 8px}
+.v6-create-options svg{width:27px;height:27px;display:block;margin:0 auto 7px}
+.v6-reel-cover{width:100%;aspect-ratio:9/16;max-height:270px;object-fit:cover;border-radius:14px;background:#eee}
+.v6-reel-upload input[type=file]{display:none}
+.v6-reel-step{display:none}.v6-reel-step.active{display:block;animation:v6In .3s ease}
+.v6-repost-badge{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.72);color:#fff;border-radius:12px;padding:5px 8px;font-size:10px}
+@media(max-width:600px){.v6-glass-nav{height:62px}.v6-create-options button{padding:15px 5px}}
+@media(min-width:700px){.app{min-height:100vh;box-shadow:0 0 55px rgba(0,0,0,.12)}}
+body.v6-dark{--v6-bg:#000;--v6-fg:#f5f5f5;--v6-muted:#aaa;--v6-line:#262626}
+body.v6-dark,.v6-dark .app{background:#000;color:#f5f5f5}
+.v6-dark .v6-glass-nav{background:rgba(20,20,20,.72);border-color:rgba(255,255,255,.15)}
+.v6-dark .v6-glass-nav button{color:#fff}.v6-dark .v6-glass-nav button.active:before{background:rgba(60,60,60,.8)}
+.v6-dark .v6-create-card{background:#171717;color:#fff}
+.v6-dark .v6-create-options button{background:#242424;color:#fff}
+/* === KP_INSTA_V6_END === */
+
 </style>
 </head>
 <body>
@@ -199,11 +292,36 @@ body:not(.lightMode){background:#050505;color:#f5f5f5}body:not(.lightMode) .app{
 <div id="groupModal" class="modal hide"><div class="sheet"><div class="sheetHandle"></div><div class="sheetHead"><h2 id="groupModalTitle" style="margin:0">Create group</h2><button class="iconBtn" onclick="closeGroupModal()"><svg class="i"><use href="#close"/></svg></button></div><input id="groupName" class="field" placeholder="Group name"><div class="searchBar"><svg class="i sm"><use href="#search"/></svg><input id="groupSearch" placeholder="Search username..."></div><div id="groupResults"></div><div class="muted" style="font-size:11px;margin:9px 0">Selected members: <span id="selectedCount">0</span></div><button id="groupCreateBtn" class="primary" onclick="createGroup()">Create group</button></div></div>
 <div id="membersModal" class="modal hide"><div class="sheet"><div class="sheetHandle"></div><div class="sheetHead"><div><h2 id="membersTitle" style="margin:0">Group</h2><div id="membersCount" class="muted" style="font-size:11px"></div></div><button class="iconBtn" onclick="closeMembersModal()"><svg class="i"><use href="#close"/></svg></button></div><div id="memberList"></div><button class="primary" onclick="addMembersFromGroup()"><svg class="i sm" style="display:inline-block;vertical-align:middle;margin-right:5px"><use href="#plus"/></svg>Add people</button></div></div>
 </div>
-<script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import{getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,updatePassword}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import{getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,query,where,getDocs,addDoc,onSnapshot,orderBy,arrayUnion,arrayRemove,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const initializeApp = cfg => firebase.initializeApp(cfg);
+const getAuth = app => firebase.auth(app);
+const onAuthStateChanged = (a, cb) => a.onAuthStateChanged(cb);
+const createUserWithEmailAndPassword = (a,e,p) => a.createUserWithEmailAndPassword(e,p);
+const signInWithEmailAndPassword = (a,e,p) => a.signInWithEmailAndPassword(e,p);
+const signOut = a => a.signOut();
+const updatePassword = (u,p) => u.updatePassword(p);
+const deleteUser = u => u.delete();
+const getFirestore = app => firebase.firestore(app);
+const doc = (db,...parts) => db.doc(parts.join('/'));
+const collection = (db,...parts) => db.collection(parts.join('/'));
+const getDoc = ref => ref.get();
+const setDoc = (ref,data,opts) => ref.set(data,opts);
+const updateDoc = (ref,data) => ref.update(data);
+const deleteDoc = ref => ref.delete();
+const addDoc = (ref,data) => ref.add(data);
+const getDocs = ref => ref.get();
+const onSnapshot = (ref,cb,err) => ref.on('snapshot',cb,err);
+const where = (field,op,value) => ({__v6type:'where',field,op,value});
+const orderBy = (field,direction='asc') => ({__v6type:'orderBy',field,direction});
+const query = (ref,...constraints) => constraints.reduce((q,c)=>{ if(c.__v6type==='where') return q.where(c.field,c.op,c.value); if(c.__v6type==='orderBy') return q.orderBy(c.field,c.direction); return q; },ref);
+const arrayUnion = (...values) => firebase.firestore.FieldValue.arrayUnion(...values);
+const arrayRemove = (...values) => firebase.firestore.FieldValue.arrayRemove(...values);
+const serverTimestamp = () => firebase.firestore.FieldValue.serverTimestamp();
+</script>
+<script>
 const firebaseConfig={apiKey:"AIzaSyDlWSDI0CTT0k6r_yb_dhDbALLLboVOHrI",authDomain:"kpinsta-c7768.firebaseapp.com",projectId:"kpinsta-c7768",storageBucket:"kpinsta-c7768.firebasestorage.app",messagingSenderId:"916550893358",appId:"1:916550893358:web:e350aed7b6898d840684bf"};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);const $=id=>document.getElementById(id);window.addEventListener('unhandledrejection',e=>{if($('le')&&/Firebase|auth|network/i.test(String(e.reason?.message||e.reason)))$('le').textContent='Firebase login error: '+(e.reason?.message||e.reason)});
 const emojiList=["😀","😎","🤩","🥳","😈","👻","🤖","👽","🐱","🐼","🦊","🐸","🦁","🐯","🐨","🐵","🐙","🦄","🐲","🌟","🔥","⚡","🌙","🍀","🎮","🎧","🚀","💎","❤️","💜","💙","💚","🖤","🤍","👑","🎯"];
@@ -217,15 +335,15 @@ draw('eg',selected,e=>{selected=e;$("prev").textContent=e});draw('eeg',editSelec
 window.birthdayNext=()=>{if(!$('dob').value){$('de').textContent='Please enter your birthday.';return}$('de').textContent='';go('username')};
 async function free(u){let s=await getDocs(query(collection(db,'users'),where('username','==',u)));return s.empty}
 window.usernameCheck=async()=>{let u=$('su').value.trim().toLowerCase().replace(/\s/g,'');$('su').value=u;$('ue').textContent='';$('us').textContent='';if(!u)return;if(!/^[a-z0-9._]{3,20}$/.test(u)){ $('ue').textContent='Use 3–20 letters, numbers, dots or underscores.';return}try{$('us').textContent=await free(u)?'✓ Username available':'Username is already taken.'}catch(e){$('ue').textContent=e.message}};
-window.usernameNext=async()=>{let u=$('su').value.trim().toLowerCase();if(!u){$('ue').textContent='Enter a username.';return}try{if(!await free(u)){$('ue').textContent='Username is already taken.';return}go('password')}catch(e){$('ue').textContent=e.message}};
+window.usernameNext=async()=>{let u=$('su').value.trim().toLowerCase().replace(/\s/g,'');$('ue').textContent='';if(!/^[a-z0-9._]{3,20}$/.test(u)){$('ue').textContent='Use 3–20 letters, numbers, dots or underscores.';return}try{const available=await free(u);if(!available){$('ue').textContent='Username is already taken.';return}}catch(e){console.warn('Username availability check skipped:',e);$('us').textContent='✓ Username format is valid';}go('password')};
 window.passwordNext=()=>{let a=$('sp').value,b=$('sp2').value;if(a.length<6){$('pe').textContent='Password must be at least 6 characters.';return}if(a!==b){$('pe').textContent='Passwords do not match.';return}$('pe').textContent='';go('emoji')};
 function authEmail(value){let v=(value||'').trim().toLowerCase();return v.includes('@')?v:v+'@kpinsta.local'}
-window.createAccount=async()=>{let u=$('su').value.trim().toLowerCase().replace(/\s/g,''),p=$('sp').value;$('ce').textContent='Creating account...';$('createBtn').disabled=true;try{if(!/^[a-z0-9._]{3,20}$/.test(u))throw Object.assign(new Error('Invalid username.'),{code:'username-invalid'});if(p.length<6)throw Object.assign(new Error('Password must be at least 6 characters.'),{code:'auth/weak-password'});if(!(await free(u)))throw Object.assign(new Error('Username already registered.'),{code:'auth/email-already-in-use'});let email=u+'@kpinsta.local';let c=await createUserWithEmailAndPassword(auth,email,p);let profile={uid:c.user.uid,username:u,email,bio:$('bio').value.trim(),emoji:selected,avatarUrl:'',note:'',birthday:$('dob').value,followers:[],following:[],followRequests:[],notificationSettings:{likes:true,comments:true,follows:true},createdAt:serverTimestamp(),online:false,lastSeen:null};await setDoc(doc(db,'users',c.user.uid),profile);me={...profile};$('ce').textContent='';await mainView('home');listenUnreadMessages();startNotificationListener()}catch(e){$('ce').textContent=e.code==='auth/email-already-in-use'?'Username already registered.':e.code==='auth/operation-not-allowed'?'Email/Password login is disabled in Firebase. Enable it in Authentication.':e.code==='auth/weak-password'?'Password must be at least 6 characters.':e.code==='username-invalid'?'Username must be 3–20 letters, numbers, dots or underscores.':(e.message||'Could not create account.')}finally{$('createBtn').disabled=false}};
+window.createAccount=async()=>{const u=$('su').value.trim().toLowerCase().replace(/\s/g,''),p=$('sp').value,birthday=$('dob').value,bio=$('bio').value.trim();const btn=$('createBtn'),err=$('ce');err.textContent='';if(!/^[a-z0-9._]{3,20}$/.test(u)){err.textContent='Username must be 3–20 letters, numbers, dots or underscores.';return}if(p.length<6){err.textContent='Password must be at least 6 characters.';return}if(!birthday){err.textContent='Please enter your birthday.';return}btn.disabled=true;btn.textContent='Creating…';try{const email=u+'@kpinsta.local';const c=await createUserWithEmailAndPassword(auth,email,p);const profile={uid:c.user.uid,username:u,email,bio,emoji:selected||'😀',avatarUrl:'',note:'',birthday,followers:[],following:[],followRequests:[],notificationSettings:{likes:true,comments:true,follows:true},createdAt:serverTimestamp(),online:false,lastSeen:null};try{await setDoc(doc(db,'users',c.user.uid),profile)}catch(profileErr){try{await deleteUser(c.user)}catch(_){}throw profileErr}me={...profile};localStorage.setItem('kp-last-user',u);err.textContent='Account created ✓';await mainView('home');listenUnreadMessages();startPresence();startNotificationListener()}catch(e){console.error('createAccount failed',e);const code=e?.code||'';err.textContent=code==='auth/email-already-in-use'?'This username is already registered.':code==='auth/operation-not-allowed'?'Enable Email/Password in Firebase Authentication → Sign-in method.':code==='auth/invalid-email'?'The generated account email was rejected by Firebase.':code==='auth/network-request-failed'?'Network error. Check your internet connection.':code==='permission-denied'?'Firestore permission denied. Check your Firestore rules.':(e?.message||'Could not create account.')}finally{btn.disabled=false;btn.textContent='Create account'}};
 window.login=async()=>{let raw=$('lu').value.trim().toLowerCase(),p=$('lp').value;$('le').textContent='';if(!raw||!p){$('le').textContent='Enter username and password.';return}$('loginBtn').disabled=true;$('loginBtn').textContent='Logging in…';try{await signInWithEmailAndPassword(auth,authEmail(raw),p);localStorage.setItem('kp-last-user',raw)}catch(e){const map={'auth/invalid-credential':'Incorrect username or password.','auth/user-not-found':'Account not found.','auth/wrong-password':'Incorrect password.','auth/too-many-requests':'Too many attempts. Try again later.','auth/operation-not-allowed':'Email/Password login is disabled in Firebase Authentication.','auth/network-request-failed':'Network error. Check your internet connection.','auth/invalid-api-key':'Firebase API key is invalid.','auth/invalid-email':'Invalid login email.'};$('le').textContent=map[e.code]||('Login failed: '+(e.message||e.code||'unknown error'))}finally{$('loginBtn').disabled=false;$('loginBtn').textContent='Log in'}};
 $('lu').value=localStorage.getItem('kp-last-user')||'';
 $('le').textContent='';onAuthStateChanged(auth,async u=>{try{if(!u){me=null;go('login');$('nav').classList.add('hide');return}let s=await getDoc(doc(db,'users',u.uid));me=s.exists()?{uid:u.uid,...s.data()}:{uid:u.uid,username:(u.email||'').split('@')[0],emoji:'😀',avatarUrl:'',bio:'',note:'',followers:[],following:[],followRequests:[]};await mainView('home');listenUnreadMessages();startPresence()}catch(e){console.error(e);$('le').textContent='Could not open your account. Check Firebase settings.'}});
 function listenUnreadMessages(){if(unreadStop)unreadStop();if(!me)return;const q=query(collection(db,'chats'),where('participants','array-contains',me.uid));unreadStop=onSnapshot(q,snap=>{let unread=false;snap.forEach(d=>{if(d.data().unreadFor===me.uid)unread=true});$('msgDot')?.classList.toggle('hide',!unread)},e=>console.error(e))}
-window.mainView=async v=>{if(!me)return;['login','birthday','username','password','emoji','settings','editProfile','noteEdit','requestsView','userProfile','followingView','notificationsView'].forEach(id=>$(id)?.classList.add('hide'));$('main').classList.remove('hide');$('chat').classList.add('hide');['homeView','searchView','reelsView','messagesView','profileView'].forEach(id=>$(id)?.classList.add('hide'));let id={home:'homeView',search:'searchView',reels:'reelsView',messages:'messagesView',profile:'profileView'}[v]||'homeView';$(id).classList.remove('hide');$('nav').classList.toggle('hide',v==='reels');document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));let active={home:'nh',search:'ns',reels:'nr',messages:'nm',profile:'np'}[v];if(active)$(active).classList.add('active');/* Header search is useful on Home only; the Search page already has its own search field. */$('headerSearch')?.classList.toggle('hide',v!=='home');$('notificationBtn')?.classList.toggle('hide',v!=='home');if(v==='home'){renderStories();listenFeed();startNotificationListener()}else if(v==='messages'){await renderNotes();loadChats()}else if(v==='reels'){await renderReels()}else if(v==='profile'){await profile();renderMyPosts();showProfileTab('posts');listenRequests()}else if(v==='following'){await renderFollowing()}else if(v==='notifications'){await renderNotifications()}else if(feedStop){feedStop();feedStop=null}if(v!=='home'&&notificationStop){notificationStop();notificationStop=null}};window.mainView=mainView;
+window.mainView=async v=>{if(!me)return;['login','birthday','username','password','emoji','settings','editProfile','noteEdit','requestsView','userProfile','followingView','followersView','notificationsView'].forEach(id=>$(id)?.classList.add('hide'));$('main').classList.remove('hide');$('chat').classList.add('hide');['homeView','searchView','reelsView','messagesView','profileView'].forEach(id=>$(id)?.classList.add('hide'));let id={home:'homeView',search:'searchView',reels:'reelsView',messages:'messagesView',profile:'profileView',following:'followingView',followers:'followersView',notifications:'notificationsView'}[v]||'homeView';$(id)?.classList.remove('hide');$('nav').classList.toggle('hide',v==='reels');document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));let active={home:'nh',search:'ns',reels:'nr',messages:'nm',profile:'np'}[v];if(active)$(active).classList.add('active');/* Header search is useful on Home only; the Search page already has its own search field. */$('headerSearch')?.classList.toggle('hide',v!=='home');$('notificationBtn')?.classList.toggle('hide',v!=='home');if(v==='home'){renderStories();listenFeed();startNotificationListener()}else if(v==='messages'){await renderNotes();loadChats()}else if(v==='reels'){await renderReels()}else if(v==='profile'){await profile();renderMyPosts();showProfileTab('posts');listenRequests()}else if(v==='following'){await renderFollowing()}else if(v==='notifications'){await renderNotifications()}else if(feedStop){feedStop();feedStop=null}if(v!=='home'&&notificationStop){notificationStop();notificationStop=null}};window.mainView=mainView;
 // Reliable people search: search across all usernames/display names locally after loading users.
 let peopleSearchTimer=null;
 async function runPeopleSearch(){
@@ -541,7 +659,7 @@ function updateChatSelectionBar(){$('chatSelectedCount').textContent=`${selected
 window.deleteSelectedChats=async()=>{if(!selectedChatKeys.size){exitChatSelectMode();return}if(!confirm(`Delete ${selectedChatKeys.size} chat(s) from this list?`)){return}for(const k of selectedChatKeys){if(k.startsWith('direct:')){const uid=k.slice(7);try{await deleteDoc(doc(db,'chats',chatId(me.uid,uid)))}catch(e){}}else if(k.startsWith('group:')){try{await deleteDoc(doc(db,'groupChats',k.slice(6)))}catch(e){}}}exitChatSelectMode();await loadChats()};
 window.exitChatSelectMode=()=>{selectedChatKeys.clear();$('chatDeleteBar').classList.add('hide');loadChats()};
 window.closeChatActionMenu=()=>{$('chatActionMenu').classList.add('hide')};window.closeMessageDeleteMenu=()=>{$('messageDeleteMenu').classList.add('hide')};
-window.enterMessageSelectMode=()=>{selectedMessageIds=new Set();document.querySelectorAll('#msgs .messageRow').forEach(row=>{row.classList.add('selectable');row.onclick=()=>{const id=row.dataset.messageId;if(!id)return;if(selectedMessageIds.has(id)){selectedMessageIds.delete(id);row.classList.remove('selected')}else{selectedMessageIds.add(id);row.classList.add('selected')}if(selectedMessageIds.size) $('messageDeleteMenu').classList.remove('hide') else $('messageDeleteMenu').classList.add('hide')}})};
+window.enterMessageSelectMode=()=>{selectedMessageIds=new Set();document.querySelectorAll('#msgs .messageRow').forEach(row=>{row.classList.add('selectable');row.onclick=()=>{const id=row.dataset.messageId;if(!id)return;if(selectedMessageIds.has(id)){selectedMessageIds.delete(id);row.classList.remove('selected')}else{selectedMessageIds.add(id);row.classList.add('selected')}if(selectedMessageIds.size) { $('messageDeleteMenu').classList.remove('hide') } else { $('messageDeleteMenu').classList.add('hide') }}})};
 window.deleteSelectedMessage=async()=>{if(!selectedMessageIds.size||!selectedMessagePath){closeMessageDeleteMenu();return}for(const id of selectedMessageIds){try{await deleteDoc(doc(db,selectedMessagePath,id))}catch(e){console.error(e)}}selectedMessageIds.clear();closeMessageDeleteMenu();if(currentGroup)openGroupChat(currentGroup);else if(chatUser)openChat(chatUser)};
 window.showToast=(text,type='info')=>{let t=document.createElement('div');t.className='toast '+type;t.textContent=text;document.body.appendChild(t);requestAnimationFrame(()=>t.classList.add('show'));setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300)},2200)};
 
@@ -578,4 +696,12 @@ function bindPostInteractions(container,arr){container.querySelectorAll('.postDe
     window.mainView=async function(v){const r=await originalMainView(v);if(v==='home'){setTimeout(renderStories,60)}return r}
   }
 })();
-</script></body></html>
+</script>
+
+
+<script>
+// KP Insta v7 safety bridge: no feature is silently swallowed.
+window.addEventListener('error',e=>{const el=document.getElementById('ce')||document.getElementById('le');if(el&&e.message)el.textContent='Error: '+e.message});
+document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const a=document.activeElement;if(a?.id==='lp')window.login?.();if(a?.id==='sp2')window.passwordNext?.();});
+</script>\n<script>window.addEventListener("error",e=>{const el=document.getElementById("le");if(el&&e.message&&/firebase|firestore|auth|cors|module|network/i.test(e.message))el.textContent="Firebase error: "+e.message});</script>
+</body></html>
